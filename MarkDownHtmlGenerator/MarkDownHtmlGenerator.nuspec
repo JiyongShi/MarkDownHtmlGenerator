@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MarkDownHtmlGenerator</id>
+    <version>1.0.0</version>
+    <authors>SHI JIYONG</authors>
+    <owners>SHI JIYONG</owners>
+    <licenseUrl>https://github.com/JiyongShi/MarkDownHtmlGenerator/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/JiyongShi/MarkDownHtmlGenerator</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Generate html from markdown files
+    </description>
+    <releaseNotes>Generate html from markdown files</releaseNotes>
+    <copyright>Copyright 2013 @ SHIJIYONG(SHIJIYONG@HOTMAIL.COM)</copyright>
+    <tags>Markdown Genarator</tags>
+    <dependencies>
+
+    </dependencies>
+    <frameworkAssemblies>
+
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="CommandLine.dll" target="tools\net40" />
+    <file src="CommandLine.xml" target="tools\net40" />
+    <file src="MarkdownDeep.dll" target="tools\net40" />
+    <file src="MarkdownDeep.pdb" target="tools\net40" />
+    <file src="MarkDownHtmlGenerator.exe" target="tools\net40" />
+    <file src="MarkDownHtmlGenerator.pdb" target="tools\net40" />
+  </files>
+</package>
