@@ -5,6 +5,7 @@ This Program is used to generate html from markdown files which are in special f
 ## Usage ##
 
 [English Usage](Usage.md)
+
 [Chinese Usage](Usage.ZH-CN.md)
 
 ## Installation ##
@@ -13,7 +14,7 @@ This Program is used to generate html from markdown files which are in special f
 
 Use Visual Studio 2012 or MSBuild compile MarkDownHtmlGenerator.csproj, then use executable file which is generated in dist folder.
 
-### Use Nuget ### 
+### Use Nuget ###
 
 Search MarkDownHtmlGenerator, install it.
 
