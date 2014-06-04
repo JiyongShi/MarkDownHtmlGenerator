@@ -23,7 +23,7 @@ namespace MarkDownHtmlGenerator
         [Option('v', "verbose", DefaultValue = false, HelpText = @"Prints all messages to standard output. Example: -v")]
         public bool Verbose { get; set; }
 
-        [Option('r', "resolvelinked", DefaultValue = false, HelpText = @"Resolve linked markdown files to HTML files. Example: -m")]
+        [Option('r', "resolvelinked", DefaultValue = false, HelpText = @"Resolve linked markdown files to HTML files. Example: -r")]
         public bool ResoveLinkedMarkdown { get; set; }
 
         [ParserState]
