@@ -88,7 +88,7 @@ namespace MarkDownHtmlGenerator
                         {
                             // html header
                             sw.WriteLine("<!Doctype html><html xmlns=http://www.w3.org/1999/xhtml>");
-                            sw.WriteLine("<head><meta http-equiv=Content-Type content=text/html;charset=utf-8\"></head>");
+                            sw.WriteLine("<head><meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" /></head>");
                             sw.Write(htmlContent);
                             // html end
                             sw.WriteLine("</html>");
