@@ -17,8 +17,14 @@ namespace MarkDownHtmlGenerator
         [Option('s', "searchpattern", Required = false, HelpText = @"Markdown file search patter. Example: -s *.md or -s *Index*.md")]
         public string SearchPartten { get; set; }
 
+        [Option('c', "css", Required = false, HelpText = @"CSS file to use in HTML. Example: -c markdown.css")]
+        public string CssFile { get; set; }
+
         [Option('v', "verbose", DefaultValue = false, HelpText = @"Prints all messages to standard output. Example: -v")]
         public bool Verbose { get; set; }
+
+        [Option('r', "resolvelinked", DefaultValue = false, HelpText = @"Resolve linked markdown files to HTML files. Example: -m")]
+        public bool ResoveLinkedMarkdown { get; set; }
 
         [ParserState]
         public IParserState LastParserState { get; set; }
