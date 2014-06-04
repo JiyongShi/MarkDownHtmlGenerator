@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using MarkdownDeep;
 
 namespace MarkDownHtmlGenerator
 {
@@ -10,6 +9,8 @@ namespace MarkDownHtmlGenerator
         static void Main(string[] args)
         {
             var options = new CommandLineOptions();
+            string[] currentMarkdownFile = { string.Empty }; // Used for passing current file to Url qualify.
+
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
                 if (!Directory.Exists(options.Path))
@@ -42,7 +43,7 @@ namespace MarkDownHtmlGenerator
                             fileNameList.Add(psf);
                         else
                             if (options.Verbose)
-                                Console.WriteLine("{0} have include in Search partten list,ignore", psf);
+                                Console.WriteLine("{0} have include in Search pattern list,ignore", psf);
                     }
                 }
 
@@ -59,10 +60,11 @@ namespace MarkDownHtmlGenerator
                     Environment.Exit(0);
                 }
 
-                var markdown = new Markdown
+                var markdown = new MarkdownFix()
                 {
                     ExtraMode = true,
-                    SafeMode = false
+                    SafeMode = false,
+                    QualifyUrl = (href) => options.ResoveLinkedMarkdown ? QualifyUrl(href, currentMarkdownFile[0], fileNameList) : href
                 };
 
                 int processCount = 0;
@@ -81,16 +83,28 @@ namespace MarkDownHtmlGenerator
                         Path.GetFileNameWithoutExtension(file) + ".html");
                     using (var markdownReader = new StreamReader(file))
                     {
+                        currentMarkdownFile[0] = file; // Used to qualify Urls
+
                         string markdownContent = markdownReader.ReadToEnd();
                         string htmlContent = markdown.Transform(markdownContent);
 
                         using (StreamWriter sw = File.CreateText(htmlFile))
                         {
                             // html header
-                            sw.WriteLine("<!Doctype html><html xmlns=http://www.w3.org/1999/xhtml>");
-                            sw.WriteLine("<head><meta http-equiv=Content-Type content=text/html;charset=utf-8\"></head>");
+                            sw.WriteLine("<!Doctype html><html xmlns=\"http://www.w3.org/1999/xhtml\">");
+                            sw.WriteLine("<head>");
+                            sw.WriteLine("<meta http-equiv=Content-Type content=text/html;charset=utf-8\">");
+
+                            if (!string.IsNullOrEmpty(options.CssFile))
+                            {
+                                sw.WriteLine(" <link href=\"" + options.CssFile + "\" media=\"all\" rel=\"stylesheet\" type=\"text/css\" />");
+                            }
+
+                            sw.WriteLine("</head>");
+                            sw.WriteLine("<body>");
                             sw.Write(htmlContent);
                             // html end
+                            sw.WriteLine("</body>");
                             sw.WriteLine("</html>");
                             sw.Close();
                         }
@@ -108,6 +122,20 @@ namespace MarkDownHtmlGenerator
             }
 
             Environment.Exit(1);
+        }
+
+        private static string QualifyUrl(string href, string currentFile, IList<string> files)
+        {
+            if (href.StartsWith("/") || href.StartsWith("#") || href.Contains("://") || href.StartsWith("mailto:"))
+                return href;
+
+            var hrefPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(currentFile), href));
+            if (files.Contains(hrefPath))
+            {
+                return Path.ChangeExtension(href, ".html");
+            }
+
+            return href;
         }
     }
 }
